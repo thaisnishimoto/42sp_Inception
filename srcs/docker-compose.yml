@@ -1,0 +1,15 @@
+services:
+    nginx:
+        container_name: nginx
+        build:
+            context: ./requirements/nginx
+            args:
+                DOMAIN_NAME: ${DOMAIN_NAME}
+                CERTS_CRT: ${CERTS_CRT}
+                CERTS_KEY: ${CERTS_KEY}
+        image: nginx
+        pull_policy: never
+        env_file:
+            - .env
+        ports:
+            - 443:443
