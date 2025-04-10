@@ -1,15 +1,31 @@
 services:
     nginx:
-        container_name: nginx
         build:
             context: ./requirements/nginx
             args:
                 DOMAIN_NAME: ${DOMAIN_NAME}
                 CERTS_CRT: ${CERTS_CRT}
                 CERTS_KEY: ${CERTS_KEY}
-        image: nginx
+        container_name: nginx
+        image: nginx:inception
         pull_policy: never
         env_file:
             - .env
         ports:
             - 443:443
+        restart: on-failure
+
+    mariadb:
+        build:
+            context: ./requirements/mariadb
+        container_name: mariadb 
+        image: mariadb:inception
+        pull_policy: never
+        env_file:
+            - .env
+        restart: on-failure
+        volumes:
+            - wp_database_volume:/var/lib/mysql
+
+volumes:
+    wp_database_volume:
