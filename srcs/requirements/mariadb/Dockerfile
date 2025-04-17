@@ -8,9 +8,8 @@ RUN apt update && \
 
 COPY ./conf/my.cnf /etc/mysql/my.cnf
 
-COPY ./tools/init.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/init.sh && \
-    /usr/local/bin/init.sh
+COPY ./tools/init.sh /usr/local/bin/init.sh
+RUN chmod +x /usr/local/bin/init.sh && /usr/local/bin/init.sh
 
 USER mysql
 

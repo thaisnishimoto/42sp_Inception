@@ -1,19 +1,19 @@
 services:
-    nginx:
-        build:
-            context: ./requirements/nginx
-            args:
-                DOMAIN_NAME: ${DOMAIN_NAME}
-                CERTS_CRT: ${CERTS_CRT}
-                CERTS_KEY: ${CERTS_KEY}
-        container_name: nginx
-        image: nginx:inception
-        pull_policy: never
-        env_file:
-            - .env
-        ports:
-            - 443:443
-        restart: on-failure
+    # nginx:
+    #     build:
+    #         context: ./requirements/nginx
+    #         args:
+    #             DOMAIN_NAME: ${DOMAIN_NAME}
+    #             CERTS_CRT_PATH: ${CERTS_CRT_PATH}
+    #             CERTS_KEY_PATH: ${CERTS_KEY_PATH}
+    #     container_name: nginx
+    #     image: nginx:inception
+    #     pull_policy: never
+    #     env_file:
+    #         - .env
+    #     ports:
+    #         - 443:443
+    #     restart: on-failure
 
     mariadb:
         build:
@@ -25,10 +25,25 @@ services:
             - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD} 
             - WP_DB_NAME=${WP_DB_NAME}
             - WP_DB_USER=${WP_DB_USER}
-            - WP_DB_PASS=${WP_DB_PASS}
+            - WP_DB_PASSWORD=${WP_DB_PASSWORD}
         restart: on-failure
         volumes:
             - wp_database_volume:/var/lib/mysql
 
+    # wordpress:
+    #     build:
+    #         context: ./requirements/wordpress
+    #     container_name: wordpress 
+    #     image: wordpress:inception
+    #     pull_policy: never
+    #     env_file:
+    #         - .env
+    #     restart: on-failure
+    #     volumes:
+    #         - wp_files_volume:/var/www/html
+    #     depends_on:
+    #         - mariadb
+
 volumes:
     wp_database_volume:
+    # wp_files_volume:
