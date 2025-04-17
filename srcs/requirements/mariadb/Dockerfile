@@ -1,5 +1,10 @@
 FROM debian:oldstable
 
+ARG WP_DB_NAME
+ARG WP_DB_USER
+ARG WP_DB_PASSWORD
+ARG MYSQL_ROOT_PASSWORD
+
 RUN apt update && \
     apt install -y mariadb-server && \
     chown -R mysql:mysql /var/lib/mysql && \
