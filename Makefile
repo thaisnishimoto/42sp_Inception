@@ -1,7 +1,47 @@
+COMPOSE_FILE=./srcs/docker-compose.yml
+
 all: up
 
+setup:
+	grep "tmina-ni.42.fr" /etc/hosts || echo "127.0.0.1 tmina-ni.42.fr" | sudo tee --append /etc/hosts > /dev/null
+	sudo mkdir -p /home/tmina-ni/data/wp-database
+	sudo mkdir -p /home/tmina-ni/data/wp-files
+
 up:
-	docker compose up --build -d
+	docker compose -f $(COMPOSE_FILE) up --build -d
 
 down:
-	docker compose down --rmi all -v
+	docker compose -f $(COMPOSE_FILE) down --rmi all -v
+
+up-nc:
+	docker compose -f $(COMPOSE_FILE) build --no-cache
+	docker compose -f $(COMPOSE_FILE) up -d 
+
+bash:
+	docker compose -f $(COMPOSE_FILE) exec $(SERV) bash
+
+logs:
+	docker compose -f $(COMPOSE_FILE) logs $(SERV) --tail=50
+
+follow-logs:
+	docker compose -f $(COMPOSE_FILE) logs -f $(SERV)
+
+rmi:
+	docker rmi $$(docker image ls -qa) --force
+
+prune:
+	docker system prune -a -f
+
+clean:
+	down
+	sudo rm -rf /home/tmina-ni/data/
+
+fclean:
+	clean
+	docker compose down --remove-orphans 
+	rmi
+	prune
+
+re: clean all 
+
+.PHONY: all setup up down up-nc bash logs follow-logs rmi prune clean fclean re 
