@@ -11,6 +11,7 @@ RUN apt update && \
     chmod +x /usr/local/bin/wp-cli.phar && \
     ln -s /usr/local/bin/wp-cli.phar /usr/local/bin/wp
 
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY ./tools/init.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/init.sh 
 

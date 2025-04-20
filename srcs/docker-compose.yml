@@ -14,6 +14,10 @@ services:
         ports:
             - 443:443
         restart: on-failure
+        volumes:
+            - wp_files:/var/www/html
+        depends_on:
+            - wordpress
 
     mariadb:
         build:
@@ -33,7 +37,7 @@ services:
             - WP_DB_PASSWORD=${WP_DB_PASSWORD}
         restart: on-failure
         volumes:
-            - wp_database_volume:/var/lib/mysql
+            - wp_database:/var/lib/mysql
 
     wordpress:
         build:
@@ -45,10 +49,10 @@ services:
             - .env
         restart: on-failure
         volumes:
-            - wp_files_volume:/var/www/html
+            - wp_files:/var/www/html
         depends_on:
             - mariadb
 
 volumes:
-    wp_database_volume:
-    wp_files_volume:
+    wp_database:
+    wp_files:

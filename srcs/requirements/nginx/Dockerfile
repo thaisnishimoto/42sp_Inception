@@ -13,6 +13,6 @@ RUN openssl req -x509 -newkey rsa:4096 -nodes \
 
 COPY ./conf/nginx.conf.template /etc/nginx/nginx.conf.template
 
-RUN envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+RUN envsubst '${DOMAIN_NAME} ${CERTS_CRT_PATH} ${CERTS_KEY_PATH}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
 CMD ["nginx", "-g", "daemon off;"]

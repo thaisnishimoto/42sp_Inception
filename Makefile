@@ -17,7 +17,7 @@ up-nc:
 	docker compose -f $(COMPOSE_FILE) build --no-cache
 	docker compose -f $(COMPOSE_FILE) up -d 
 
-bash:
+exec:
 	docker compose -f $(COMPOSE_FILE) exec $(SERV) bash
 
 logs:
@@ -44,4 +44,4 @@ fclean:
 
 re: clean all 
 
-.PHONY: all setup up down up-nc bash logs follow-logs rmi prune clean fclean re 
+.PHONY: all setup up down up-nc exec logs follow-logs rmi prune clean fclean re 
