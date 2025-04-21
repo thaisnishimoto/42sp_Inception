@@ -26,4 +26,12 @@ wp core install --allow-root --path=/var/www/html \
   --admin_email="$WP_ADMIN_EMAIL" \
   --skip-email
 
+wp user create --allow-root --path=/var/www/html \
+  "$WP_USER" \
+  "$WP_USER_EMAIL" \
+  --user_pass="$WP_USER_PASSWORD" \
+  --role=author
+
+wp theme install twentyseventeen --allow-root --path=/var/www/html --activate
+
 exec php-fpm7.4 -F
