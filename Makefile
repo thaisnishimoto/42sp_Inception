@@ -1,11 +1,11 @@
 COMPOSE_FILE=./srcs/docker-compose.yml
 
-all: up
+all: setup up
 
 setup:
 	grep "tmina-ni.42.fr" /etc/hosts || echo "127.0.0.1 tmina-ni.42.fr" | sudo tee --append /etc/hosts > /dev/null
-	sudo mkdir -p /home/tmina-ni/data/wp-database
-	sudo mkdir -p /home/tmina-ni/data/wp-files
+	sudo mkdir -p /home/tmina-ni/data/wp_database
+	sudo mkdir -p /home/tmina-ni/data/wp_files
 
 up:
 	docker compose -f $(COMPOSE_FILE) up --build -d

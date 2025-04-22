@@ -55,4 +55,14 @@ services:
 
 volumes:
     wp_database:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/tmina-ni/data/wp_database
+            o: bind
     wp_files:
+        driver: local
+        driver_opts:
+            type: none
+            device: /home/tmina-ni/data/wp_files
+            o: bind
