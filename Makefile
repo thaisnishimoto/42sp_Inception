@@ -11,7 +11,7 @@ up:
 	docker compose -f $(COMPOSE_FILE) up --build -d
 
 down:
-	docker compose -f $(COMPOSE_FILE) down --rmi all -v
+	docker compose -f $(COMPOSE_FILE) down --rmi all -v --remove-orphans
 
 up-nc:
 	docker compose -f $(COMPOSE_FILE) build --no-cache
@@ -32,15 +32,10 @@ rmi:
 prune:
 	docker system prune -a -f
 
-clean:
-	down
+clean: down
 	sudo rm -rf /home/tmina-ni/data/
 
-fclean:
-	clean
-	docker compose down --remove-orphans 
-	rmi
-	prune
+fclean: clean rmi prune
 
 re: clean all 
 
