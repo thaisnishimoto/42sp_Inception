@@ -1,4 +1,5 @@
-COMPOSE_FILE=./srcs/docker-compose.yml
+COMPOSE_FILE = ./srcs/docker-compose.yml
+DOCKER_COMPOSE_COMMAND = docker-compose -f $(COMPOSE_FILE)
 
 all: setup up
 
@@ -12,23 +13,23 @@ setup:
 	fi
 
 up:
-	docker compose -f $(COMPOSE_FILE) up --build -d
+	$(DOCKER_COMPOSE_COMMAND) up --build -d
 
 down:
-	docker compose -f $(COMPOSE_FILE) down --rmi all -v --remove-orphans
+	$(DOCKER_COMPOSE_COMMAND) down --rmi all -v --remove-orphans
 
 up-nc:
-	docker compose -f $(COMPOSE_FILE) build --no-cache
-	docker compose -f $(COMPOSE_FILE) up -d 
+	$(DOCKER_COMPOSE_COMMAND) build --no-cache
+	$(DOCKER_COMPOSE_COMMAND) up -d 
 
 exec:
-	docker compose -f $(COMPOSE_FILE) exec $(SERV) bash
+	$(DOCKER_COMPOSE_COMMAND) exec $(SERV) bash
 
 logs:
-	docker compose -f $(COMPOSE_FILE) logs $(SERV) --tail=50
+	$(DOCKER_COMPOSE_COMMAND) logs $(SERV) --tail=50
 
 follow-logs:
-	docker compose -f $(COMPOSE_FILE) logs -f $(SERV)
+	$(DOCKER_COMPOSE_COMMAND) logs -f $(SERV)
 
 rmi:
 	@if [ -n "$$(docker image ls -qa)" ]; then \
