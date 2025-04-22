@@ -6,6 +6,7 @@ setup:
 	grep "tmina-ni.42.fr" /etc/hosts || echo "127.0.0.1 tmina-ni.42.fr" | sudo tee --append /etc/hosts > /dev/null
 	sudo mkdir -p /home/tmina-ni/data/wp_database
 	sudo mkdir -p /home/tmina-ni/data/wp_files
+	cp ./srcs/.env.example ./srcs/.env
 
 up:
 	docker compose -f $(COMPOSE_FILE) up --build -d
@@ -27,7 +28,11 @@ follow-logs:
 	docker compose -f $(COMPOSE_FILE) logs -f $(SERV)
 
 rmi:
-	docker rmi $$(docker image ls -qa) --force
+	@if [ -n "$$(docker image ls -qa)" ]; then \
+		docker rmi $$(docker image ls -qa) --force; \
+	else \
+		echo "No images to remove."; \
+	fi
 
 prune:
 	docker system prune -a -f
