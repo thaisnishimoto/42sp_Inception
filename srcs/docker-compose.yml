@@ -16,6 +16,8 @@ services:
         restart: on-failure
         volumes:
             - wp_files:/var/www/html
+        networks:
+            - inception
         depends_on:
             - wordpress
 
@@ -38,6 +40,8 @@ services:
         restart: on-failure
         volumes:
             - wp_database:/var/lib/mysql
+        networks:
+            - inception
 
     wordpress:
         build:
@@ -50,6 +54,8 @@ services:
         restart: on-failure
         volumes:
             - wp_files:/var/www/html
+        networks:
+            - inception
         depends_on:
             - mariadb
 
@@ -66,3 +72,7 @@ volumes:
             type: none
             device: /home/tmina-ni/data/wp_files
             o: bind
+
+networks:
+  inception:
+    driver: bridge
