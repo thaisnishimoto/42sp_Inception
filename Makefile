@@ -8,8 +8,8 @@ setup:
 	sudo mkdir -p /home/tmina-ni/data/wp_database
 	sudo mkdir -p /home/tmina-ni/data/wp_files
 	@if [ ! -f ./srcs/.env ]; then \
-	echo "Creating .env from .env.example..."; \
-	cp ./srcs/.env.example ./srcs/.env; \
+		echo "Creating .env from .env.example..."; \
+		cp ./srcs/.env.example ./srcs/.env; \
 	fi
 
 up:
