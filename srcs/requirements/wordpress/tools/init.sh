@@ -34,4 +34,6 @@ wp user create --allow-root --path=/var/www/html \
 
 wp theme install twentyseventeen --allow-root --path=/var/www/html --activate
 
+wp plugin install classic-editor --activate --allow-root --path=/var/www/html
+
 exec php-fpm7.4 -F
